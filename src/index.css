@@ -1,0 +1,317 @@
+/* ---------- 1. Theme variables ---------- */
+:root {
+  --bg: #eef2f0;
+  --card: #ffffff;
+  --ink: #12322f;
+  --mute: #5d716e;
+  --line: #d5dfdc;
+  --track: #e3eae8;
+  --accent: #12322f;
+  --on-accent: #ffffff;
+  --focus: #f2b134;
+  --danger: #c4402f;
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #0e1a19;
+  --card: #162726;
+  --ink: #e6f0ee;
+  --mute: #93aaa6;
+  --line: #27403d;
+  --track: #233a37;
+  --accent: #f2b134;
+  --on-accent: #12322f;
+  --danger: #ef7a68;
+  color-scheme: dark;
+}
+
+/* ---------- 2. Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 3rem);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---------- 3. Layout ---------- */
+.wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 16px 56px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.sub {
+  margin: 6px 0 0;
+  color: var(--mute);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.grid > * {
+  min-width: 0;
+}
+
+.col {
+  display: grid;
+  gap: 12px;
+}
+
+/* ---------- 4. Cards and stats ---------- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.stat span {
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+.stat b {
+  display: block;
+  font-size: 1.8rem;
+  letter-spacing: -0.02em;
+}
+
+.stat.big {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+.stat.big b {
+  font-size: clamp(2.2rem, 7vw, 3.2rem);
+}
+
+/* ---------- 5. Form ---------- */
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: var(--mute);
+}
+
+input,
+select {
+  width: 100%;
+  margin-top: 4px;
+  padding: 10px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.add {
+  width: 100%;
+  padding: 11px;
+  font-weight: 600;
+  color: var(--on-accent);
+  background: var(--accent);
+  border: 0;
+  border-radius: 8px;
+}
+
+.err {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  color: var(--danger);
+}
+
+.ghost {
+  padding: 6px 12px;
+  color: var(--ink);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+/* ---------- 6. Chart ---------- */
+.bar {
+  display: grid;
+  grid-template-columns: 76px 1fr 72px;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  padding: 5px 0;
+  text-align: left;
+  color: inherit;
+  background: none;
+  border: 0;
+}
+
+.bar.on {
+  font-weight: 800;
+}
+
+.track {
+  height: 14px;
+  overflow: hidden;
+  background: var(--track);
+  border-radius: 7px;
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: 7px;
+  transition: width 0.35s;
+}
+
+.amt {
+  text-align: right;
+}
+
+/* ---------- 7. Transactions ---------- */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.chip {
+  padding: 4px 12px;
+  font-size: 0.85rem;
+  color: var(--ink);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.chip.on {
+  color: var(--on-accent);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  display: grid;
+  grid-template-columns: 10px 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+
+li small {
+  display: block;
+  color: var(--mute);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.del {
+  padding: 2px 8px;
+  font-size: 1.2rem;
+  color: var(--mute);
+  background: none;
+  border: 0;
+  border-radius: 6px;
+}
+
+.del:hover {
+  color: var(--danger);
+}
+
+.empty {
+  padding: 18px 0;
+  text-align: center;
+  color: var(--mute);
+}
+
+/* ---------- 8. Mobile ---------- */
+@media (max-width: 720px) {
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stat.big {
+    grid-column: 1 / -1;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bar {
+    grid-template-columns: 64px 1fr 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    transition: none;
+  }
+}
