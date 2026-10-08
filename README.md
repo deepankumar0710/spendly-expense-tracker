@@ -1,16 +1,81 @@
-# React + Vite
+# Spendly: Expense Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive expense tracker that shows where your money goes.
+Add expenses, filter by category and see your spending at a glance.
 
-Currently, two official plugins are available:
+**Live demo:** https://spendly-expense-tracker-rust.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![Spendly light mode](screenshots/desktop-light.png)
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Add expenses with title, amount, date and category, with input validation
+- Delete expenses
+- Summary cards: total spent, this month's spending and top category
+- Bar chart of spending by category (click a bar to filter)
+- Category filter chips on the transactions list
+- Data saved in the browser with localStorage, so it survives a refresh
+- Light and dark mode, remembering your choice
+- Responsive layout for desktop and mobile
+- Keyboard accessible, with visible focus and labels for screen readers
 
-## Expanding the ESLint configuration
+## Tech stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React (hooks: useState, useEffect, useMemo)
+- JavaScript (ES6+)
+- Vite
+- CSS (Grid, Flexbox, CSS variables, media queries)
+- ESLint
+- Git and GitHub, deployed on Vercel
+
+## Screenshots
+
+| Light mode | Dark mode |
+|---|---|
+| ![Light](screenshots/desktop-light.png) | ![Dark](screenshots/desktop-dark.png) |
+
+## Project structure
+
+```
+src/
+  components/
+    AddForm.jsx   form with validation
+    Chart.jsx     category bars and filtering
+    List.jsx      transactions list with filter chips
+    Stats.jsx     summary cards
+  constants.js    categories, colors and helper functions
+  App.jsx         app state and layout
+  main.jsx        entry point
+  index.css       styles and theme variables
+```
+
+## Run locally
+
+```bash
+git clone https://github.com/deepankumar0710/spendly-expense-tracker.git
+cd spendly-expense-tracker
+npm install
+npm run dev
+```
+
+Then open the link shown in the terminal (usually http://localhost:5173).
+
+## What I learned
+
+- Splitting a UI into reusable components and passing data with props
+- Lifting state up so sibling components share the same data
+- Controlled form inputs and validation
+- Deriving values (totals, top category) instead of storing them
+- Saving data with localStorage and useEffect
+- Theming with CSS variables and building a responsive layout
+
+## Future improvements
+
+- Edit existing expenses
+- Monthly budget with warnings
+- Python (Flask) backend with a database
+- Export to CSV
+
+## Author
+
+Deepan kumar | deepanmessi0710@gmail.com
