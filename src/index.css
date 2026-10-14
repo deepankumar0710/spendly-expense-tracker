@@ -333,3 +333,5 @@ li small {
 .auth-error { color: #d93025; font-size: 0.9rem; margin: 0; }
 .auth-topbar { display: flex; justify-content: flex-end; align-items: center; gap: 0.75rem; padding: 0.5rem 1rem; font-size: 0.9rem; }
 .auth-loading { text-align: center; margin-top: 3rem; }
+.app-error { color: #d93025; font-size: 0.9rem; margin: 0 0 1rem; }
+.app-error button { margin-left: 0.5rem; cursor: pointer; }

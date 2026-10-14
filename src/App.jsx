@@ -1,25 +1,12 @@
 import { useState, useEffect } from 'react';
-import { seed } from './constants';
 import List from './components/List';
 import AddForm from './components/AddForm';
 import Stats from './components/Stats';
 import Chart from './components/Chart';
+import { fetchExpenses, createExpense, deleteExpense as deleteExpenseApi } from './api/services';
+import { fromApi, toApi } from './api/mappers';
 
-const ITEMS_KEY = 'spendly:items';
 const THEME_KEY = 'spendly:theme';
-
-function loadItems() {
-  try {
-    const raw = localStorage.getItem(ITEMS_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) return parsed;
-    }
-  } catch (error) {
-    console.error('Could not load saved expenses:', error);
-  }
-  return seed;
-}
 
 function loadTheme() {
   try {
@@ -34,17 +21,29 @@ function loadTheme() {
 }
 
 function App() {
-  const [items, setItems] = useState(loadItems);
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [filter, setFilter] = useState('All');
   const [theme, setTheme] = useState(loadTheme);
 
-  useEffect(() => {
+  const loadExpenses = async () => {
+    setLoading(true);
+    setError('');
     try {
-      localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
-    } catch (error) {
-      console.error('Could not save expenses:', error);
+      const data = await fetchExpenses();
+      setItems(data.map(fromApi));
+    } catch (err) {
+      console.error(err);
+      setError('Could not load your expenses. Check that the server is running.');
+    } finally {
+      setLoading(false);
     }
-  }, [items]);
+  };
+
+  useEffect(() => {
+    loadExpenses();
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -55,19 +54,35 @@ function App() {
     }
   }, [theme]);
 
-  const addExpense = (expense) => {
-    setItems([expense, ...items]);
+   const addExpense = async (expense) => {
+    setError('');
+    try {
+      const created = await createExpense(toApi(expense));
+      setItems((prev) => [fromApi(created), ...prev]);
+      return true;
+    } catch (err) {
+      console.error(err);
+      setError('Could not save the expense. Please try again.');
+      return false;
+    }
   };
 
-  const deleteExpense = (id) => {
-    setItems(items.filter((item) => item.id !== id));
+  const deleteExpense = async (id) => {
+    setError('');
+    try {
+      await deleteExpenseApi(id);
+      setItems((prev) => prev.filter((item) => item.id !== id));
+    } catch (err) {
+      console.error(err);
+      setError('Could not delete the expense. Please try again.');
+    }
   };
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
-    return (
+  return (
     <div className="wrap">
       <header className="top">
         <div>
@@ -79,20 +94,32 @@ function App() {
         </button>
       </header>
 
-      <Stats items={items} />
+      {error && (
+        <p className="app-error" role="alert">
+          {error} <button onClick={loadExpenses}>Retry</button>
+        </p>
+      )}
 
-      <div className="grid">
-        <div className="col">
-          <AddForm onAdd={addExpense} />
-          <Chart items={items} filter={filter} setFilter={setFilter} />
-        </div>
-        <List
-          items={items}
-          onDel={deleteExpense}
-          filter={filter}
-          setFilter={setFilter}
-        />
-      </div>
+      {loading ? (
+        <p className="auth-loading">Loading your expenses...</p>
+      ) : (
+        <>
+          <Stats items={items} />
+
+          <div className="grid">
+            <div className="col">
+              <AddForm onAdd={addExpense} />
+              <Chart items={items} filter={filter} setFilter={setFilter} />
+            </div>
+            <List
+              items={items}
+              onDel={deleteExpense}
+              filter={filter}
+              setFilter={setFilter}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }

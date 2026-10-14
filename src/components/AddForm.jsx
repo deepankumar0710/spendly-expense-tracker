@@ -14,7 +14,7 @@ function AddForm({ onAdd }) {
     setForm({ ...form, [field]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const amount = parseFloat(form.amount);
@@ -28,7 +28,7 @@ function AddForm({ onAdd }) {
       return;
     }
 
-    onAdd({
+    const ok = await onAdd({
       id: Date.now(),
       title: form.title.trim(),
       amount: amount,
@@ -36,8 +36,10 @@ function AddForm({ onAdd }) {
       date: form.date,
     });
 
-    setError('');
-    setForm({ ...form, title: '', amount: '' });
+    if (ok) {
+      setError('');
+      setForm({ ...form, title: '', amount: '' });
+    }
   };
 
   return (
