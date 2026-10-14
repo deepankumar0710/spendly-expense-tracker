@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=100)),
                 ('amount', models.DecimalField(decimal_places=2, max_digits=10, validators=[django.core.validators.MinValueValidator(Decimal('0.01'))])),
-                ('category', models.CharField(choices=[('food', 'Food'), ('transport', 'Transport'), ('shopping', 'Shopping'), ('bills', 'Bills'), ('other', 'Entertainment'), ('other', 'Other')], default='other', max_length=20)),
+                ('category', models.CharField(choices=[('food', 'Food'), ('transport', 'Transport'), ('shopping', 'Shopping'), ('bills', 'Bills'), ('entertainment', 'Entertainment'), ('other', 'Other')], default='other', max_length=20)),
                 ('date', models.DateField()),
                 ('notes', models.TextField(blank=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
