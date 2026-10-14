@@ -8,10 +8,10 @@ from django.db import models
 class Expense(models.Model):
     class Category(models.TextChoices):
         FOOD = "food", "Food"
-        TRANSPORT = "transport", "Transport"
-        SHOPPING = "shopping", "Shopping"
+        TRAVEL = "travel", "Travel"
         BILLS = "bills", "Bills"
-        ENTERTAINMENT = "entertainment", "Entertainment"
+        SHOPPING = "shopping", "Shopping"
+        HEALTH = "health", "Health"
         OTHER = "other", "Other"
 
     user = models.ForeignKey(
