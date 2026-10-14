@@ -1,4 +1,25 @@
 from datetime import date
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 from decimal import Decimal
 
 from django.contrib.auth.models import User
@@ -105,7 +126,7 @@ class ExpenseAPITests(BaseExpenseTest):
 
     def test_filter_by_category(self):
         self.make_expense(self.asha, title="Lunch", category="food")
-        self.make_expense(self.asha, title="Bus", category="transport")
+        self.make_expense(self.asha, title="Bus", category="travel")
         response = self.client.get(reverse("expense-list"), {"category": "food"})
         self.assertEqual(self.titles(response), ["Lunch"])
 
@@ -133,7 +154,7 @@ class SummaryAPITests(BaseExpenseTest):
     def test_summary_totals_only_count_own_expenses(self):
         self.make_expense(self.asha, amount="100.00", category="food")
         self.make_expense(self.asha, amount="200.00", category="food")
-        self.make_expense(self.asha, amount="50.00", category="transport")
+        self.make_expense(self.asha, amount="50.00", category="travel")
         self.make_expense(self.asha, amount="1000.00", category="bills", day=date(2020, 1, 1))
         self.make_expense(self.ravi, amount="9999.00", category="shopping")
 
